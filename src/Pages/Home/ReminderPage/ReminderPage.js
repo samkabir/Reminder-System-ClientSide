@@ -1,27 +1,61 @@
 import React from 'react';
 import momentTZ from 'moment-timezone';
+import { useForm } from 'react-hook-form';
 
 
 const ReminderPage = () => {
     const timeZonesList = momentTZ.tz.names();
-    console.log(timeZonesList);
+    const {  register, handleSubmit, reset } = useForm();
 
-    const handleInfo = (e) =>{
-        e.preventDefault();
-        console.log(e.target[0].value, e.target[1].value,e.target[2].value,e.target[3].value );
+    const handleInfo = (data) =>{
+        console.log(data);
+
+        //Posting a Reminder
+        // fetch('https://localhost:5000/reminders', {
+        //     method: 'POST',
+        //     headers: {
+        //         'content-type': 'application/json'
+        //     },
+        //     body: JSON.stringify(data)
+        // })
+        // .then(res => res.json())
+        // .then(res => {
+        //     if(res.insertedId){
+        //         alert('Reminder added successfully');
+        //         reset();
+        //     }
+        // })
+
     }
     return (
         <div>
-            <form onSubmit={handleInfo}>
-                <label>Date</label>
-                <input type="date" name="Reminder Date" />
+            <form onSubmit={handleSubmit(handleInfo)}>
                 <br />
-                <label>Time</label>
-                <input type="time" name="Reminder Time" />
+                <div>
+                    <input type="email" placeholder="Email"  {...register("email")} />
+                </div>
                 <br />
-                <label>Message</label>
-                <input type="text" name="Message" />
-                <input type="submit" />
+                <div>
+                    <select placeholder="Time Zone"  {...register("timezone")}>
+                        {timeZonesList.map(timeZone => <option value={timeZone}>{timeZone}</option>)}
+                    </select>
+                </div>
+                <br />
+                <div>
+                    <input type="date" placeholder="Reminder Date" {...register("date")} />
+                </div>
+                <br />
+                <div>
+                    <input type="time" placeholder="Reminder Time"  {...register("time")} />
+                </div>
+                <br />
+                <div>
+                    <input type="text" placeholder="Message"  {...register("message")} />
+                </div>
+                <br />
+                <div>
+                    <input type="submit" value="Set Reminder" />
+                </div>
             </form>
         </div>
     );
