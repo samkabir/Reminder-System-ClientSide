@@ -11,20 +11,20 @@ const ReminderPage = () => {
         console.log(data);
 
         //Posting a Reminder
-        // fetch('https://localhost:5000/reminders', {
-        //     method: 'POST',
-        //     headers: {
-        //         'content-type': 'application/json'
-        //     },
-        //     body: JSON.stringify(data)
-        // })
-        // .then(res => res.json())
-        // .then(res => {
-        //     if(res.insertedId){
-        //         alert('Reminder added successfully');
-        //         reset();
-        //     }
-        // })
+        fetch('http://localhost:5000/reminders', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(res => {
+            if(res.insertedId){
+                alert('Reminder added successfully');
+                reset();
+            }
+        })
 
     }
     return (
